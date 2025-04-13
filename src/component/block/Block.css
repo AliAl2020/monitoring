@@ -1,0 +1,24 @@
+/* Generic wrapper for the block */
+.block-wrapper {
+    border-radius: 8px;
+    margin: 5;
+    background-color: #f9f9f9; /* Neutral background color */
+    overflow: auto; /* Prevent content from spilling out */
+    position: relative; /* Ensure positioning context for children like the menu */
+  }
+  
+  /* Container for the block's content */
+  .block-container {
+    padding: 16px; /* Generic padding */
+    overflow-x: auto; /* Enable horizontal scrolling */
+    overflow-y: auto; /* Enable vertical scrolling */
+    max-height: 100%; /* Adjust as needed 300px*/
+    width: 100%; /* Ensure it doesn't exceed the container's width */
+  }
+  
+  /* Generic content styles */
+  .block-content {
+    color: #333; /* Neutral text color */
+    line-height: 1.5; /* Comfortable line spacing */
+    font-size: 1rem; /* Standard font size */
+  }

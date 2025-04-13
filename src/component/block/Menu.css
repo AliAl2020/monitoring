@@ -1,0 +1,66 @@
+/* Menu container (header area) */
+.menu-container {
+    background-color: #ddd; /* Neutral default background color */
+      color: #333; /* Neutral text color */
+      padding: 12px; /* Spacing inside the menu */
+      border-radius: 8px; /* Rounded corners */
+      display: flex;
+      justify-content: space-between; /* Space between title and buttons */
+      align-items: center; /* Vertically align items */
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+      position: relative; /* Ensure the menu stays within its parent */
+      overflow: hidden; /* Prevent overflow */
+      max-height: calc(100% - 10px); /* Ensure it doesn't go beyond the parent's top border */
+    }
+    
+    /* Title inside the menu */
+    .menu-title {
+      font-size: 1.2rem; /* Standard font size for the title */
+      font-weight: bold; /* Bold for emphasis */
+      margin: 0; /* Remove default margin */
+    }
+    
+    /* Buttons container */
+    .menu-buttons {
+      display: flex;
+      gap: 8px; /* Space between buttons */
+    }
+    
+    /* Individual button styles */
+    .menu-button {
+      background-color: white; /* Neutral button background */
+      color: #333; /* Neutral button text color */
+      border: 1px solid #ccc; /* Subtle border */
+      border-radius: 4px; /* Rounded corners for buttons */
+      padding: 4px 8px; /* Standard button padding */
+      font-size: 1rem; /* Standard font size */
+      cursor: pointer; /* Pointer cursor for interactivity */
+      transition: background-color 0.2s ease; /* Smooth hover transition */
+    }
+    
+    /* Button hover state */
+    .menu-button:hover {
+      background-color: #e7e7e7; /* Slightly darker background on hover */
+    }
+    
+    /* Button active (clicked) state */
+    .menu-button:active {
+      background-color: #ddd; /* Darker background when clicked */
+    }
+    
+    /* Print-specific styles */
+    @media print {
+      .menu-container {
+        background-color: transparent; /* Remove background during print */
+        box-shadow: none; /* Remove shadow during print */
+        color: black; /* Neutral color for print */
+      }
+    
+      .menu-buttons {
+        display: none; /* Hide interactive buttons during printing */
+      }
+  
+        
+  
+    }
+    

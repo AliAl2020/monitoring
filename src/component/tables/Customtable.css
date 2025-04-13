@@ -1,0 +1,59 @@
+/* Container styling */
+.table-container {
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+  }
+  
+  /* Search input */
+  .input-group input {
+    border-radius: 5px;
+    border: 1px solid #ced4da;
+  }
+  
+  /* Checkbox filters */
+  form .form-check {
+    margin-right: 15px;
+  }
+  
+  /* Table styling */
+  .table {
+    background-color: #ffffff;
+    border-collapse: collapse;
+    border-radius: 8px;
+    overflow: hidden;
+    width: 100% !important;
+    table-layout: auto;
+  }
+  
+  .table thead th {
+    background-color: #343a40;
+    color: #ffffff;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 14px;
+    padding: 12px;
+  }
+  
+  .table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  .table tbody td {
+    font-size: 14px;
+    padding: 10px 12px;
+    vertical-align: middle;
+  }
+  
+  /* Sorting icons */
+  .table th svg {
+    margin-left: 5px;
+    vertical-align: middle;
+  }
+  
+  /* Hover effect on rows */
+  .table tbody tr:hover {
+    background-color: #e9ecef;
+    transition: background-color 0.2s ease-in-out;
+  }
