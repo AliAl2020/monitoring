@@ -1,15 +1,23 @@
 import React, { useState, useMemo } from "react";
-import { Table as BootstrapTable, Form, InputGroup } from "react-bootstrap";
+import {
+  Table as BootstrapTable,
+  Form,
+  InputGroup,
+  DropdownButton,
+  Dropdown,
+  Button,
+} from "react-bootstrap";
 import { FaSort, FaSortUp, FaSortDown } from "react-icons/fa";
-
-import "./Customtable.css"; // Import your CSS file for styling
+import "./Customtable.css";
 
 const CustomTable = ({ headers, data }) => {
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
   const [visibleColumns, setVisibleColumns] = useState(
     headers.map((header) => ({ name: header, visible: true }))
   );
-  const [sortConfig, setSortConfig] = useState({ key: null, direction: 'asc' });
+  const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
+  const [currentPage, setCurrentPage] = useState(1);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const filteredData = useMemo(() => {
     if (!data || !Array.isArray(data)) return [];
@@ -26,38 +34,51 @@ const CustomTable = ({ headers, data }) => {
     if (!sortConfig.key) return filteredData;
     return [...filteredData].sort((a, b) => {
       if (a[sortConfig.key] < b[sortConfig.key]) {
-        return sortConfig.direction === 'asc' ? -1 : 1;
+        return sortConfig.direction === "asc" ? -1 : 1;
       }
       if (a[sortConfig.key] > b[sortConfig.key]) {
-        return sortConfig.direction === 'asc' ? 1 : -1;
+        return sortConfig.direction === "asc" ? 1 : -1;
       }
       return 0;
     });
   }, [filteredData, sortConfig]);
 
+  const paginatedData = useMemo(() => {
+    const start = (currentPage - 1) * rowsPerPage;
+    const end = start + rowsPerPage;
+    return sortedData.slice(start, end);
+  }, [sortedData, currentPage, rowsPerPage]);
+
+  const totalPages = Math.ceil(sortedData.length / rowsPerPage);
+
   const toggleColumnVisibility = (column) => {
-    setVisibleColumns((prevColumns) =>
-      prevColumns.map((col) =>
+    setVisibleColumns((prev) =>
+      prev.map((col) =>
         col.name === column ? { ...col, visible: !col.visible } : col
       )
     );
   };
 
   const handleSort = (key) => {
-    setSortConfig((prevConfig) => {
-      if (prevConfig.key === key) {
+    setSortConfig((prev) => {
+      if (prev.key === key) {
         return {
           key,
-          direction: prevConfig.direction === 'asc' ? 'desc' : 'asc',
+          direction: prev.direction === "asc" ? "desc" : "asc",
         };
       }
-      return { key, direction: 'asc' };
+      return { key, direction: "asc" };
     });
   };
 
+  const handleRowsPerPageChange = (value) => {
+    setRowsPerPage(value);
+    setCurrentPage(1);
+  };
+
   return (
-    <div  className="p-3 table-container"> 
-      {/* Search Field */}
+    <div className="p-3 table-container">
+      {/* Search */}
       <InputGroup className="mb-3">
         <Form.Control
           type="text"
@@ -67,7 +88,7 @@ const CustomTable = ({ headers, data }) => {
         />
       </InputGroup>
 
-      {/* Toggle Column Visibility */}
+      {/* Column Visibility Toggles */}
       <div className="mb-3">
         {headers.map((header) => (
           <Form.Check
@@ -75,7 +96,9 @@ const CustomTable = ({ headers, data }) => {
             type="checkbox"
             id={`toggle-${header}`}
             label={header}
-            checked={visibleColumns.find((col) => col.name === header)?.visible || false}
+            checked={
+              visibleColumns.find((col) => col.name === header)?.visible || false
+            }
             onChange={() => toggleColumnVisibility(header)}
             inline
           />
@@ -83,7 +106,7 @@ const CustomTable = ({ headers, data }) => {
       </div>
 
       {/* Table */}
-      <BootstrapTable striped bordered hover>
+      <BootstrapTable striped bordered hover responsive className="w-100">
         <thead>
           <tr>
             {visibleColumns
@@ -92,11 +115,15 @@ const CustomTable = ({ headers, data }) => {
                 <th
                   key={col.name}
                   onClick={() => handleSort(col.name)}
-                  style={{ cursor: 'pointer' }}
+                  style={{ cursor: "pointer" }}
                 >
-                  {col.name}{' '}
+                  {col.name}{" "}
                   {sortConfig.key === col.name ? (
-                    sortConfig.direction === 'asc' ? <FaSortUp /> : <FaSortDown />
+                    sortConfig.direction === "asc" ? (
+                      <FaSortUp />
+                    ) : (
+                      <FaSortDown />
+                    )
                   ) : (
                     <FaSort />
                   )}
@@ -105,17 +132,75 @@ const CustomTable = ({ headers, data }) => {
           </tr>
         </thead>
         <tbody>
-          {sortedData.map((row, rowIndex) => (
+          {paginatedData.map((row, rowIndex) => (
             <tr key={rowIndex}>
               {visibleColumns
                 .filter((col) => col.visible)
                 .map((col) => (
-                  <td key={col.name} dangerouslySetInnerHTML={{ __html: row[col.name] }}></td>
+                  <td
+                    key={col.name}
+                    dangerouslySetInnerHTML={{ __html: row[col.name] }}
+                  ></td>
                 ))}
             </tr>
           ))}
         </tbody>
       </BootstrapTable>
+
+      {/* Pagination */}
+      <div className="pagination-container">
+        {/* Rows per page */}
+        <div className="rows-dropdown">
+          <span>Rows per page:</span>
+          <Form.Select
+  size="sm"
+  className="rows-dropdown-select"
+  value={rowsPerPage}
+  onChange={(e) => handleRowsPerPageChange(Number(e.target.value))}
+>
+  {[5, 10, 20, 50].map((value) => (
+    <option key={value} value={value}>
+      {value}
+    </option>
+  ))}
+</Form.Select>
+        </div>
+
+        {/* Page numbers */}
+        <div className="page-buttons">
+          <Button
+            size="sm"
+            variant="outline-secondary"
+            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+            disabled={currentPage === 1}
+          >
+            Previous
+          </Button>
+
+          {[...Array(totalPages)].map((_, i) => (
+            <Button
+              key={i}
+              size="sm"
+              variant={i + 1 === currentPage ? "primary" : "outline-secondary"}
+              className={i + 1 === currentPage ? "active" : ""}
+              onClick={() => setCurrentPage(i + 1)}
+            >
+              {i + 1}
+            </Button>
+          ))}
+
+          <Button
+            size="sm"
+            variant="outline-secondary"
+            onClick={() =>
+              setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+            }
+            disabled={currentPage === totalPages}
+          >
+            Next
+          </Button>
+        </div>
+      </div>
     </div>
   );
 };
