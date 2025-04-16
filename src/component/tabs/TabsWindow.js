@@ -1,33 +1,41 @@
 import React, { useState } from 'react';
-import { Nav, Row, Col } from 'react-bootstrap';
+import { Nav, Container, Row, Col } from 'react-bootstrap';
 import GreenWindow from '../windows/green/GreenWindow';
 import RedWindow from '../windows/red/RedWindow';
+import './TabsWindow.css';
 
 const TabsWindow = () => {
   const [activeTab, setActiveTab] = useState('green');
 
   return (
-    <Row className="m-3">
-      <Col sm={2}>
-        <Nav variant="pills" className="flex-column" activeKey={activeTab} onSelect={(k) => setActiveTab(k)}>
-          <Nav.Item>
-            <Nav.Link eventKey="green">Green Window</Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
-            <Nav.Link eventKey="red">Red Window</Nav.Link>
-          </Nav.Item>
-        </Nav>
-      </Col>
-      <Col sm={10}>
+    <Container fluid className="p-0 d-flex">
+      {/* Sidebar with Bootstrap Grid */}
+      <div className="tab-buttons">
+        <Row className="g-3"> {/* g-3 = gap between rows */}
+          <Col xs={12}>
+            <Nav
+              variant="pills"
+              className="flex-column"
+              activeKey={activeTab}
+              onSelect={(k) => setActiveTab(k)}
+            >
+              <Nav.Item className="bgbt">
+                <Nav.Link eventKey="green" className="custom-tab">Green Window</Nav.Link>
+              </Nav.Item>
+              <Nav.Item className="bgbt">
+                <Nav.Link eventKey="red" className="custom-tab">Red Window</Nav.Link>
+              </Nav.Item>
+            </Nav>
+          </Col>
+        </Row>
+      </div>
+
+      {/* Main content */}
+      <div className="tab-content-area flex-grow-1 p-3">
         {activeTab === 'green' && <GreenWindow />}
-        {activeTab === 'red' && (
-                            <div>
-                                <RedWindow />
-                                <GreenWindow />
-                            </div>
-                        )}
-      </Col>
-    </Row>
+        {activeTab === 'red' && <RedWindow />}
+      </div>
+    </Container>
   );
 };
 

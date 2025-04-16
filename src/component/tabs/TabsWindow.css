@@ -1,28 +1,40 @@
-.tabs-container {
+.tab-buttons {
+    width: 180px;
+    background-color: #f8f9fa;
+    padding-top: 30px;
     height: 100vh;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
   }
   
-  .sidebar {
-    background-color: #f0f0f0;
-    padding-top: 1rem;
-  }
-  
-  .custom-tabs .tab-button {
+  .custom-tab {
+    padding: 12px;
     border-radius: 8px;
-    margin-bottom: 10px;
-    background-color: #ffffff;
-    color: #333;
-    padding: 10px 15px;
-    text-align: left;
     font-weight: bold;
-    transition: all 0.2s ease-in-out;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    text-align: center;
+    transition: all 0.2s ease;
+    background-color: white;
+    color: #333;
+    display: block;
+    width: 80%;
   }
   
-  .custom-tabs .tab-button.active,
-  .custom-tabs .tab-button:hover {
-    background-color: #007bff;
-    color: white;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+  
+  .custom-tab:hover,
+  .custom-tab.active {
+    background-color: #007bff;      /* Full blue background */
+    color: white !important;        /* White text */
+    text-decoration: none;          /* Remove underline */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
   
+  .tab-content-area {
+    margin-left: 180px;
+    width: calc(100% - 180px);
+  }
+  .nav.flex-column .nav-item + .nav-item {
+    margin-top: 16px;
+  }
