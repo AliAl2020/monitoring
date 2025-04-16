@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import CustomTable from '../../tables/Customtable';
 
 
-const GreenWindow = () => {
+const RedWindow = () => {
     const [data, setData] = useState([{"A":1,"B":1},{"A":2,"B":4}]);
 
 
@@ -16,7 +16,7 @@ const GreenWindow = () => {
       <Block >
         { data ? (
           {
-            title: "GreenWindow",
+            title: "RedWindow",
             content: (
               <CustomTable
               
@@ -36,4 +36,4 @@ const GreenWindow = () => {
   
 
 
-export default GreenWindow;
+export default RedWindow;

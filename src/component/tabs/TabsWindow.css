@@ -1,0 +1,28 @@
+.tabs-container {
+    height: 100vh;
+  }
+  
+  .sidebar {
+    background-color: #f0f0f0;
+    padding-top: 1rem;
+  }
+  
+  .custom-tabs .tab-button {
+    border-radius: 8px;
+    margin-bottom: 10px;
+    background-color: #ffffff;
+    color: #333;
+    padding: 10px 15px;
+    text-align: left;
+    font-weight: bold;
+    transition: all 0.2s ease-in-out;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .custom-tabs .tab-button.active,
+  .custom-tabs .tab-button:hover {
+    background-color: #007bff;
+    color: white;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+  }
+  
